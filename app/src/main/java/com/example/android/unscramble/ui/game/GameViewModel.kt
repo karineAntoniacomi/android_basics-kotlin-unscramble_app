@@ -7,6 +7,34 @@ import androidx.lifecycle.ViewModel
 // ser estendido para ser usado no app.
 class GameViewModel : ViewModel() {
 
+    // variável de classe do tipo MutableList<String>
+    // para armazenar uma lista de palavras
+    private var wordList: MutableList<String> = mutableListOf()
+
+    // variável de classe para armazenar a palavra que o jogador
+    // está tentando decifrar. Propriedade inicializada mais tarde
+    private lateinit var currentWord: String
+
+    private fun getNextWord() {
+        // Acessa palavra aleatória da allWordsList e atribua à currentWord
+        currentWord = allWordsList.random()
+
+        // converte a string currentWord em uma matriz de caracteres
+        val tempWord = currentWord.toCharArray()
+
+        //Embaralha caracteres da matriz
+        tempWord.shuffle()
+
+        // atribui o resultado à currentScrambledWord
+        // para criar uma palavra embaralhada
+        return currentScrambledWord(currentWord)
+
+        // caso a palavra embaralhada seja igual a não embaralhada
+        if(currentScrambledWord == currentWord.toString()) {
+
+        }
+    }
+
     init {
         Log.d("GameFragment", "GameViewModel created!")
     }

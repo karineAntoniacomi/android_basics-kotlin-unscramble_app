@@ -16,12 +16,11 @@
 
 package com.example.android.unscramble.ui.game
 
-import android.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
@@ -29,7 +28,7 @@ import com.example.android.unscramble.databinding.GameFragmentBinding
 /**
  * Fragment where the game is played, contains the game logic.
  */
-class GameFragment : Fragment() {
+class   GameFragment : androidx.fragment.app.Fragment() {
 
     // Associa objeto ViewModel GameViewModel ao controlador de IU (atividade / fragmento) GameFragment
     // Inicializa GameViewModel usando o delegado da propriedade by viewModels() do Kotlin
@@ -50,6 +49,9 @@ class GameFragment : Fragment() {
     ): View {
         // Inflate the layout XML file and return a binding object instance
         binding = GameFragmentBinding.inflate(inflater, container, false)
+        // log statement para registrar a criação do fragmento. O callback onCreateView()
+        // será acionado quando o fragmento for criado pela 1a vez e quando for recriado
+        Log.d("GameFragment", "GameFragment created/re-created!")
         return binding.root
     }
 
@@ -57,13 +59,19 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Setup a click listener for the Submit and Skip buttons.
-        binding.submit.setOnClickListener { onSubmitWord() }
-        binding.skip.setOnClickListener { onSkipWord() }
+       // binding.submit.setOnClickListener { onSubmitWord() }
+      //  binding.skip.setOnClickListener { onSkipWord() }
         // Update the UI
         updateNextWordOnScreen()
         binding.score.text = getString(R.string.score, 0)
         binding.wordCount.text = getString(
                 R.string.word_count, 0, MAX_NO_OF_WORDS)
+    }
+
+    // será chamado quando a atividade e o fragmento correspondentes forem destruídos.
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("GameFragment", "GameFragment destroyed!")
     }
 
     /*
